@@ -13,12 +13,12 @@ export * from '@supabase/realtime-js'
 /**
  * Creates a new Supabase Client.
  */
-const createClient = (
+const createClient = <T>(
   supabaseUrl: string,
   supabaseKey: string,
   options?: SupabaseClientOptions
 ) => {
-  return new SupabaseClient(supabaseUrl, supabaseKey, options)
+  return new SupabaseClient<T>(supabaseUrl, supabaseKey, options)
 }
 
 export {

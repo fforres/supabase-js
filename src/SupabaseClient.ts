@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS = {
  *
  * An isomorphic Javascript client for interacting with Postgres.
  */
-export default class SupabaseClient {
+export default class SupabaseClient<P extends { [key: string]: any }> {
   /**
    * Supabase Auth allows you to create and manage user sessions for access to data that is secured by access policies.
    */
@@ -80,13 +80,13 @@ export default class SupabaseClient {
    *
    * @param table The table name to operate on.
    */
-  from<T = any>(table: string): SupabaseQueryBuilder<T> {
+  from<T = any>(table: keyof P extends never ? string : keyof P): SupabaseQueryBuilder<T> {
     const url = `${this.restUrl}/${table}`
     return new SupabaseQueryBuilder<T>(url, {
       headers: this._getAuthHeaders(),
       schema: this.schema,
       realtime: this.realtime,
-      table,
+      table: table as string,
     })
   }
 
